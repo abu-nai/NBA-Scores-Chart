@@ -1,3 +1,5 @@
+// warriorGames is an array of objects, whose KEYS have VALUES that are ALSO objects.
+
 const warriorsGames = [{
     awayTeam: {
       team: 'Golden State',
@@ -85,15 +87,15 @@ const warriorsGames = [{
 ]
 
 // create the parent element to which we will append game information to
-
 const ulParent = document.createElement('ul');
 
+// loop over each of the games using a "for... of..." loop. "for... of..." loops work with ITERABLES (arrays/strings), which warriorsGames is one of. they will not work with objects. 
 for (let game of warriorsGames) {
   // destructure each game object in the warriorsGames array into homeTeam and awayTeam objects
   const {homeTeam, awayTeam} = game;
   // make an li for each game
   const gameLi = document.createElement('li');
-  // destructure team points out of object. create variables with information that we want displayed. use : syntax to rename variable names so that there aren't duplicates for home and away.
+  // destructure team names and points out of homeTeam and awayTeam objects to create variables with information that we want displayed. use : syntax to rename variable names so that there aren't duplicates variable names for home and away.
   const {team:hTeam, points:hPoints} = homeTeam;
   const {team:aTeam, points:aPoints} = awayTeam;
   // create text that we want to add to each gameLi
@@ -107,16 +109,15 @@ for (let game of warriorsGames) {
       scoreLine = `${aPoints} - <b>${hPoints}</b>`;
   }
 
-  // create a reference to the Golden State Warriors objects using a ternary operator. this ternary operator will set the variable warriors to the homeTeam object or awayTeam object from the warriorsGames array depending on if the statement (hTeam === 'Golden State') evaluates to true or false.
+  // create a reference to the team (away or home) objects whose team name is strictly equal to 'Golden State Warriors' using a ternary operator. this ternary operator will set the variable warriors to the homeTeam object or awayTeam object from the warriorsGames array depending on if the statement (hTeam === 'Golden State') evaluates to true or false.
   const warriors = hTeam === 'Golden State' ? homeTeam : awayTeam;
 
-  // use another ternary operator to evaluate whether or not the warriors have won or not and then apply the win or loss class appropriately.
+  // use another ternary operator to evaluate whether or not the Golden State Warriors (variable const warriors) have won or not and then apply the win or loss class appropriately, which at this point will highlight the scoreline green or red, respectively.
   gameLi.classList.add(warriors.isWinner ? 'win' : 'loss');
 
-  console.log(warriors);
   // add innerHTML to each gameLi
   gameLi.innerHTML = `${teamNames} ${scoreLine}`;
-  console.log(scoreLine);
+
   // need to append the new lis to an existing object on the document in order for it to show up!
   ulParent.append(gameLi);
 }
