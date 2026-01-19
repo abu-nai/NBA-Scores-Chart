@@ -1,0 +1,126 @@
+const warriorsGames = [{
+    awayTeam: {
+      team: 'Golden State',
+      points: 119,
+      isWinner: true
+    },
+    homeTeam: {
+      team: 'Houston',
+      points: 106,
+      isWinner: false
+    }
+  },
+  {
+    awayTeam: {
+      team: 'Golden State',
+      points: 105,
+      isWinner: false
+    },
+    homeTeam: {
+      team: 'Houston',
+      points: 127,
+      isWinner: true
+    }
+  },
+  {
+    homeTeam: {
+      team: 'Golden State',
+      points: 126,
+      isWinner: true
+    },
+    awayTeam: {
+      team: 'Houston',
+      points: 85,
+      isWinner: false
+    }
+  },
+  {
+    homeTeam: {
+      team: 'Golden State',
+      points: 92,
+      isWinner: false
+    },
+    awayTeam: {
+      team: 'Houston',
+      points: 95,
+      isWinner: true
+    }
+  },
+  {
+    awayTeam: {
+      team: 'Golden State',
+      points: 94,
+      isWinner: false
+    },
+    homeTeam: {
+      team: 'Houston',
+      points: 98,
+      isWinner: true
+    }
+  },
+  {
+    homeTeam: {
+      team: 'Golden State',
+      points: 115,
+      isWinner: true
+    },
+    awayTeam: {
+      team: 'Houston',
+      points: 86,
+      isWinner: false
+    }
+  },
+  {
+    awayTeam: {
+      team: 'Golden State',
+      points: 101,
+      isWinner: true
+    },
+    homeTeam: {
+      team: 'Houston',
+      points: 92,
+      isWinner: false
+    }
+  }
+]
+
+// create the parent element to which we will append game information to
+
+const ulParent = document.createElement('ul');
+
+for (let game of warriorsGames) {
+  // destructure each game object in the warriorsGames array into homeTeam and awayTeam objects
+  const {homeTeam, awayTeam} = game;
+  // make an li for each game
+  const gameLi = document.createElement('li');
+  // destructure team points out of object. create variables with information that we want displayed. use : syntax to rename variable names so that there aren't duplicates for home and away.
+  const {team:hTeam, points:hPoints} = homeTeam;
+  const {team:aTeam, points:aPoints} = awayTeam;
+  // create text that we want to add to each gameLi
+  const teamNames = `${aTeam} @ ${hTeam}`;
+  // here we use let instead of const because we need to update the value in the following if else conditional
+  let scoreLine;
+
+  if (aPoints > hPoints) {
+      scoreLine = `<b>${aPoints}</b> - ${hPoints}`;
+  } else {
+      scoreLine = `${aPoints} - <b>${hPoints}</b>`;
+  }
+
+  // create a reference to the Golden State Warriors objects using a ternary operator. this ternary operator will set the variable warriors to the homeTeam object or awayTeam object from the warriorsGames array depending on if the statement (hTeam === 'Golden State') evaluates to true or false.
+  const warriors = hTeam === 'Golden State' ? homeTeam : awayTeam;
+
+  // use another ternary operator to evaluate whether or not the warriors have won or not and then apply the win or loss class appropriately.
+  gameLi.classList.add(warriors.isWinner ? 'win' : 'loss');
+
+  console.log(warriors);
+  // add innerHTML to each gameLi
+  gameLi.innerHTML = `${teamNames} ${scoreLine}`;
+  console.log(scoreLine);
+  // need to append the new lis to an existing object on the document in order for it to show up!
+  ulParent.append(gameLi);
+}
+
+// need to connect the ulParent to the body for it and its children to exist.
+// do not need to use .querySelector for the body!
+document.body.prepend(ulParent);
